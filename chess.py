@@ -274,7 +274,7 @@ class Pawn(Figure):
 		self.poss_moves = self.get_sourrounding()	
 
 
-def check_if_move_is_possible(Chess_Board, start_position, end_position):
+def check_if_move_is_possible(start_position, end_position):
 	print("STARTING POSITION: ", start_position, " ENDING POSITION: ", end_position)
 	print('first check...')
 	cur_Board = Chess_Board.get_positions()
@@ -458,7 +458,7 @@ def process_input(current_color, start_position, end_position):
 	else:
 		pass
 
-	if check_if_move_is_possible(Chess_Board, start_position, end_position) and check_if_own_king_in_danger(start_position, end_position) and check_if_checkmate(current_color, start_position, end_position):
+	if check_if_move_is_possible(start_position, end_position) and check_if_own_king_in_danger(start_position, end_position) and check_if_checkmate(current_color, start_position, end_position):
 		print('test12')
 		print(Chess_Board.Fig_Pos[(end_position)]._figure)
 		print(Chess_Board.Fig_Pos[(end_position)].position)

@@ -5,7 +5,9 @@ from chess import Board, check_if_move_is_possible
 
 class TestChessGame(unittest.TestCase):
     def setUp(self):
-        self.chess_board = Board()  # Initialize the chess board for each test case
+        self.chess_board = Board()
+        # for to_update in self.chess_board.Fig_Pos:
+        #     self.chess_board.Fig_Pos[to_update].update_poss_moves()  # Initialize the chess board for each test case
 
     def test_initial_board_setup(self):
         # Ensure that the initial board setup is as expected
@@ -18,21 +20,20 @@ class TestChessGame(unittest.TestCase):
         self.assertTrue((0, 0) in initial_positions)
         self.assertEqual(initial_positions[(0, 0)]._figure, 'Rook')
 
-        # Add more assertions based on the expected initial setup
 
-    # def test_piece_moves(self):
-    #     # Test specific moves of different pieces and verify their validity
+    def test_piece_moves(self):
+        # Test specific moves of different pieces and verify their validity
 
-    #     # Example test: Test a pawn's movement from one valid position to another
-    #     # Consider other pieces and their possible moves to cover various scenarios
+        # Example test: Test a pawn's movement from one valid position to another
+        # Consider other pieces and their possible moves to cover various scenarios
 
-    #     # Simulate the move
-    #     start_position = (6, 0)
-    #     end_position = (5, 0)
-    #     move_validity = check_if_move_is_possible(self.chess_board, start_position, end_position)
+        # Simulate the move
+        start_position = (6, 0)
+        end_position = (5, 0)
+        move_validity = check_if_move_is_possible(start_position, end_position)
 
-    #     # Assert the validity of the move
-    #     self.assertTrue(move_validity)
+        # Assert the validity of the move
+        self.assertTrue(move_validity)
 
     #     # Add more tests for different pieces and their movement scenarios
 
