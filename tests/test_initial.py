@@ -125,13 +125,6 @@ class TestChessGame(unittest.TestCase):
         self.assertEqual(initial_positions[translate('f','7')]._figure, 'Pawn')
         self.assertEqual(initial_positions[translate('g','7')]._figure, 'Pawn')
         self.assertEqual(initial_positions[translate('h','7')]._figure, 'Pawn')
-    # def test_piece_moves(self):
-        
-    #     start_position = translate('c','3')
-    #     end_position = translate('b','1')
-    #     move_validity = check_if_move_is_possible(start_position, end_position,self.chess_board)
-        
-    #     self.assertTrue(move_validity)
 
 
 if __name__ == '__main__':
