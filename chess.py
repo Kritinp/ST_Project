@@ -94,7 +94,7 @@ class King(Figure):
 		sur = [(i[0], i[1]) for i in sur if -1 < i[0] < 8 and -1 < i[1] < 8]
 		return sur 
 
-	def check_move(self, end_position):
+	def check_move(self, end_position,Chess_Board):
 		if not self.poss_moves:
 			return False
 
@@ -116,7 +116,7 @@ class King(Figure):
 	def update_current_pos(self, new_position):
 		self.position = new_position
 
-	def update_poss_moves(self):
+	def update_poss_moves(self,Chess_Board):
 		sur = self.get_sourrounding()
 		cur_Board = Chess_Board.get_positions()
 		self.poss_moves = [(i[0], i[1]) for i in sur if i not in cur_Board or Chess_Board.Fig_Pos[(i[0], i[1])]._color != self._color]
@@ -127,7 +127,7 @@ class Queen(Figure):
 		Figure.__init__(self, color, position, poss_moves)
 		self._figure = figure
 
-	def get_sourrounding(self):
+	def get_sourrounding(self,Chess_Board):
 		cur_Board = Chess_Board.get_positions()
 		i,j = self.position[0], self.position[1]
 		sur = []
@@ -157,8 +157,8 @@ class Queen(Figure):
 					j_m += pos[1]
 		return sur
 
-	def update_poss_moves(self):
-		self.poss_moves = self.get_sourrounding()
+	def update_poss_moves(self,Chess_Board):
+		self.poss_moves = self.get_sourrounding(Chess_Board)
 
 
 class Bishop(Figure):
@@ -166,7 +166,7 @@ class Bishop(Figure):
 		Figure.__init__(self, color, position, poss_moves)
 		self._figure = figure
 
-	def get_sourrounding(self):
+	def get_sourrounding(self,Chess_Board):
 		cur_Board = Chess_Board.get_positions()
 		i,j = self.position[0], self.position[1]
 		sur = []
@@ -185,8 +185,8 @@ class Bishop(Figure):
 					j_m += pos[1]
 		return sur		
 
-	def update_poss_moves(self):
-		self.poss_moves = self.get_sourrounding()
+	def update_poss_moves(self,Chess_Board):
+		self.poss_moves = self.get_sourrounding(Chess_Board)
 
 
 class Rook(Figure):
@@ -195,7 +195,7 @@ class Rook(Figure):
 		self._figure = figure
 		self.already_moved = False
 
-	def get_sourrounding(self):
+	def get_sourrounding(self,Chess_Board):
 		cur_Board = Chess_Board.get_positions()
 		i,j = self.position[0], self.position[1]
 		sur = []
@@ -211,8 +211,8 @@ class Rook(Figure):
 					break
 		return sur
 
-	def update_poss_moves(self):
-		self.poss_moves = self.get_sourrounding()
+	def update_poss_moves(self,Chess_Board):
+		self.poss_moves = self.get_sourrounding(Chess_Board)
 
 
 class Knight(Figure):
@@ -220,7 +220,7 @@ class Knight(Figure):
 		Figure.__init__(self, color, position, poss_moves)
 		self._figure = figure
 
-	def get_sourrounding(self):
+	def get_sourrounding(self,Chess_Board):
 		sur = []
 		cur_Board = Chess_Board.get_positions()
 		i = self.position[0]
@@ -235,8 +235,8 @@ class Knight(Figure):
 				sur.append((i_k, j_k))	
 		return sur
 
-	def update_poss_moves(self):
-		self.poss_moves = self.get_sourrounding()
+	def update_poss_moves(self,Chess_Board):
+		self.poss_moves = self.get_sourrounding(Chess_Board)
 
 
 class Pawn(Figure):
@@ -244,7 +244,7 @@ class Pawn(Figure):
 		Figure.__init__(self, color, position, poss_moves)
 		self._figure = figure
 
-	def get_sourrounding(self):
+	def get_sourrounding(self,Chess_Board):
 		sur = []
 		cur_Board = Chess_Board.get_positions()
 		i = self.position[0]
@@ -270,11 +270,11 @@ class Pawn(Figure):
 				sur.append((i-1, j-1))			
 		return sur
 
-	def update_poss_moves(self):
-		self.poss_moves = self.get_sourrounding()	
+	def update_poss_moves(self,Chess_Board):
+		self.poss_moves = self.get_sourrounding(Chess_Board)	
 
 
-def check_if_move_is_possible(start_position, end_position):
+def check_if_move_is_possible(start_position, end_position,Chess_Board):
 	print("STARTING POSITION: ", start_position, " ENDING POSITION: ", end_position)
 	print('first check...')
 	cur_Board = Chess_Board.get_positions()
@@ -285,16 +285,18 @@ def check_if_move_is_possible(start_position, end_position):
 		return False
 
 
-def check_if_own_king_in_danger(start_position, end_position):
+def check_if_own_king_in_danger(start_position, end_position,Chess_Board):
 	print('second check...')
 	current_color = Chess_Board.Fig_Pos[start_position]._color
 	position_own_king = ()
 
+	print("here1")
 	Chess_Board.Fig_Pos[start_position].position = end_position
+	print("here2")
 	Chess_Board.update_positions(start_position, end_position)
-
+	print("here")
 	for to_update in Chess_Board.Fig_Pos:
-		Chess_Board.Fig_Pos[to_update].update_poss_moves()
+		Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
 		if Chess_Board.Fig_Pos[to_update]._figure == 'King' and Chess_Board.Fig_Pos[to_update]._color == current_color:
 			position_own_king = Chess_Board.Fig_Pos[to_update].position
 
@@ -305,13 +307,13 @@ def check_if_own_king_in_danger(start_position, end_position):
 			Chess_Board.Fig_Pos[end_position].position = start_position
 			Chess_Board.update_positions(end_position, start_position)
 			for to_update in Chess_Board.Fig_Pos:
-				Chess_Board.Fig_Pos[to_update].update_poss_moves()	
+				Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)	
 			return False
 	print('test7')
 	return True
 
 
-def check_if_checkmate(current_color, start_position, end_position):
+def check_if_checkmate(current_color, start_position, end_position,Chess_Board):
 	enemy_king_pos = ()
 
 	for find_king in Chess_Board.Fig_Pos:
@@ -343,7 +345,7 @@ def check_if_checkmate(current_color, start_position, end_position):
 					Chess_Board.update_positions(old_position, new_position)
 
 					for to_update in Chess_Board.Fig_Pos:
-						Chess_Board.Fig_Pos[to_update].update_poss_moves()
+						Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
 					print(enemy_king_pos)
 					print(Chess_Board.Fig_Pos[end_position].poss_moves)
 					if enemy_king_pos not in Chess_Board.Fig_Pos[end_position].poss_moves:
@@ -353,14 +355,14 @@ def check_if_checkmate(current_color, start_position, end_position):
 						Chess_Board.update_positions(new_position, old_position)
 
 						for to_update in Chess_Board.Fig_Pos:
-							Chess_Board.Fig_Pos[to_update].update_poss_moves()
+							Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
 						return True
 
 					Chess_Board.Fig_Pos[new_position].position = old_position
 					Chess_Board.update_positions(new_position, old_position)
 
 					for to_update in Chess_Board.Fig_Pos:
-						Chess_Board.Fig_Pos[to_update].update_poss_moves()						
+						Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)						
 
 
 
@@ -375,7 +377,7 @@ def check_if_checkmate(current_color, start_position, end_position):
 	return False
 
 
-def check_rochade(current_color, start_position, end_position):
+def check_rochade(current_color, start_position, end_position,Chess_Board):
 	print('test')
 
 	cur_Board = Chess_Board.get_positions()
@@ -418,7 +420,7 @@ def check_rochade(current_color, start_position, end_position):
 	Chess_Board.update_position_rochade(start_position, end_position)
 
 	for to_update in Chess_Board.Fig_Pos:
-		Chess_Board.Fig_Pos[to_update].update_poss_moves()
+		Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
 
 	position_own_king = ()
 	for to_update in Chess_Board.Fig_Pos:
@@ -432,16 +434,16 @@ def check_rochade(current_color, start_position, end_position):
 			Chess_Board.update_position_rochade(end_position, start_position)
 
 			for to_update in Chess_Board.Fig_Pos:
-				Chess_Board.Fig_Pos[to_update].update_poss_moves()			
+				Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)			
 			return False 
 	p1.already_moved = True
 	p2.already_moved = True
 	return True
 
-def process_input(current_color, start_position, end_position):
+def process_input(current_color, start_position, end_position,Chess_Board):
 	print('process_input...', current_color, start_position, end_position)
 	cur_Board = Chess_Board.get_positions()
-	print()
+	print(cur_Board)
 	if start_position not in cur_Board:
 		print('Empty field chosen.')
 		return False
@@ -453,12 +455,12 @@ def process_input(current_color, start_position, end_position):
 
 	print('comes to check...')
 
-	if check_rochade(current_color, start_position, end_position):
+	if check_rochade(current_color, start_position, end_position,Chess_Board):
 		return True
 	else:
 		pass
 
-	if check_if_move_is_possible(start_position, end_position) and check_if_own_king_in_danger(start_position, end_position) and check_if_checkmate(current_color, start_position, end_position):
+	if check_if_move_is_possible(start_position, end_position,Chess_Board) and check_if_own_king_in_danger(start_position, end_position,Chess_Board) and check_if_checkmate(current_color, start_position, end_position,Chess_Board):
 		print('test12')
 		print(Chess_Board.Fig_Pos[(end_position)]._figure)
 		print(Chess_Board.Fig_Pos[(end_position)].position)
@@ -471,7 +473,7 @@ def process_input(current_color, start_position, end_position):
 		return False
 
 
-def play_game():
+def play_game(Chess_Board):
 	global playing 
 	playing = True
 	current_color = 1
@@ -491,7 +493,7 @@ def play_game():
 				start_position = (translate_b[b], translate_a[a])
 				end_position = (translate_b[e], translate_a[d])	
 
-			if process_input(current_color, start_position, end_position):
+			if process_input(current_color, start_position, end_position,Chess_Board):
 				current_color = 0 if current_color == 1 else 1
 				Chess_Board.draw_Board()
 
@@ -505,5 +507,5 @@ if __name__ == '__main__':
 	print('Welcome to this Chess Game. Have fun!')
 	Chess_Board.draw_Board()
 	for to_update in Chess_Board.Fig_Pos:
-		Chess_Board.Fig_Pos[to_update].update_poss_moves()
-	play_game()
+		Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
+	play_game(Chess_Board)

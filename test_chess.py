@@ -6,8 +6,8 @@ from chess import Board, check_if_move_is_possible
 class TestChessGame(unittest.TestCase):
     def setUp(self):
         self.chess_board = Board()
-        # for to_update in self.chess_board.Fig_Pos:
-        #     self.chess_board.Fig_Pos[to_update].update_poss_moves()  # Initialize the chess board for each test case
+        for to_update in self.chess_board.Fig_Pos:
+            self.chess_board.Fig_Pos[to_update].update_poss_moves(self.chess_board)  # Initialize the chess board for each test case
 
     def test_initial_board_setup(self):
         # Ensure that the initial board setup is as expected
@@ -28,9 +28,9 @@ class TestChessGame(unittest.TestCase):
         # Consider other pieces and their possible moves to cover various scenarios
 
         # Simulate the move
-        start_position = (6, 0)
-        end_position = (5, 0)
-        move_validity = check_if_move_is_possible(start_position, end_position)
+        start_position = (7, 1)
+        end_position = (5, 2)
+        move_validity = check_if_move_is_possible(start_position, end_position,self.chess_board)
 
         # Assert the validity of the move
         self.assertTrue(move_validity)
