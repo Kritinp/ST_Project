@@ -299,7 +299,7 @@ def check_if_own_king_in_danger(start_position, end_position,Chess_Board):
 		Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
 		if Chess_Board.Fig_Pos[to_update]._figure == 'King' and Chess_Board.Fig_Pos[to_update]._color == current_color:
 			position_own_king = Chess_Board.Fig_Pos[to_update].position
-
+	
 	print('test6')
 	for figures in Chess_Board.Fig_Pos:
 		if Chess_Board.Fig_Pos[figures]._color != current_color and position_own_king in Chess_Board.Fig_Pos[figures].poss_moves:
@@ -502,10 +502,10 @@ def play_game(Chess_Board):
 
 
 
-if __name__ == '__main__':
-	Chess_Board = Board()
-	print('Welcome to this Chess Game. Have fun!')
-	Chess_Board.draw_Board()
-	for to_update in Chess_Board.Fig_Pos:
-		Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
-	play_game(Chess_Board)
+# if __name__ == '__main__':
+# 	Chess_Board = Board()
+# 	print('Welcome to this Chess Game. Have fun!')
+# 	Chess_Board.draw_Board()
+# 	for to_update in Chess_Board.Fig_Pos:
+# 		Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
+# 	play_game(Chess_Board)
