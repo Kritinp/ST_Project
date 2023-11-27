@@ -39,7 +39,7 @@ class TestChessGame(unittest.TestCase):
 						(6,6) : Pawn(1, (6,6), []),
 						(6,7) : Pawn(1, (6,7), [])
 						}
-        self.chess_board.draw_Board()
+        # self.chess_board.draw_Board()
         for to_update in self.chess_board.Fig_Pos:
             self.chess_board.Fig_Pos[to_update].update_poss_moves(self.chess_board)  # Initialize the chess board for each test case
 
