@@ -1,8 +1,10 @@
 *DETAILED REPORT SUBMITTED AS PDF*
 
-Code Repository: 
-Commands
-To run tests:
+Code Repository: https://github.com/Kritinp/ST_Project
+
+Test Case Strategy Used: Mutation testing
+
+Commands to run tests:
 $ python3 -m unittest tests/test_*
 
 To run mutation testing:
