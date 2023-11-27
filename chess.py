@@ -35,20 +35,20 @@ class Board(object):
 						(6,7) : Pawn(1, (6,7), [])
 						}
 
-	def draw_Board(self):
-		board_side = [' 8 \u2502',' 7 \u2502',' 6 \u2502',' 5 \u2502',' 4 \u2502',' 3 \u2502',' 2 \u2502',' 1 \u2502']
-		print('\n\n        a   b   c   d   e   f   g   h' + '\n    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n   \u2502                                    \u2502')
-		k = 8
-		for i in range(8):
-			print(board_side[i], end = '   ')
-			for j in range(8):
-				if (i,j) in self.Fig_Pos:
-					print(self.Fig_Pos[(i,j)]._figure[0] + str(self.Fig_Pos[(i,j)]._color), end = '  ')
-				else: 
-					print(' \u2022 ', end = ' ')
-			print(' \u2502 ' + str(k) + '\n   \u2502                                    \u2502')
-			k -= 1
-		print('    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n        a   b   c   d   e   f   g   h' + '\n')
+	# def draw_Board(self):
+	# 	board_side = [' 8 \u2502',' 7 \u2502',' 6 \u2502',' 5 \u2502',' 4 \u2502',' 3 \u2502',' 2 \u2502',' 1 \u2502']
+	# 	print('\n\n        a   b   c   d   e   f   g   h' + '\n    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n   \u2502                                    \u2502')
+	# 	k = 8
+	# 	for i in range(8):
+	# 		print(board_side[i], end = '   ')
+	# 		for j in range(8):
+	# 			if (i,j) in self.Fig_Pos:
+	# 				print(self.Fig_Pos[(i,j)]._figure[0] + str(self.Fig_Pos[(i,j)]._color), end = '  ')
+	# 			else: 
+	# 				print(' \u2022 ', end = ' ')
+	# 		print(' \u2502 ' + str(k) + '\n   \u2502                                    \u2502')
+	# 		k -= 1
+	# 	print('    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n        a   b   c   d   e   f   g   h' + '\n')
 
 	def get_positions(self):
 		return self.Fig_Pos
@@ -303,7 +303,7 @@ def check_if_own_king_in_danger(start_position, end_position,Chess_Board):
 	print('test6')
 	for figures in Chess_Board.Fig_Pos:
 		if Chess_Board.Fig_Pos[figures]._color != current_color and position_own_king in Chess_Board.Fig_Pos[figures].poss_moves:
-			print('Move not possible. Own King would be in chess.')
+			print('Move not possible. Own King would be in check')
 			Chess_Board.Fig_Pos[end_position].position = start_position
 			Chess_Board.update_positions(end_position, start_position)
 			for to_update in Chess_Board.Fig_Pos:
@@ -334,38 +334,40 @@ def check_if_checkmate(current_color, start_position, end_position,Chess_Board):
 		return True
 
 	for find_helpers in Chess_Board.Fig_Pos:
-		if Chess_Board.Fig_Pos[find_helpers]._color != current_color and Chess_Board.Fig_Pos[find_helpers]._figure != 'King':
-			for helpers_poss_move in Chess_Board.Fig_Pos[find_helpers].poss_moves:
-				if helpers_poss_move in attackers_moves:
-					print('poss_helper:', Chess_Board.Fig_Pos[find_helpers].position)
-					old_position = Chess_Board.Fig_Pos[find_helpers].position
-					new_position = helpers_poss_move
+		print("helpers are ", find_helpers)
+		# if Chess_Board.Fig_Pos[find_helpers]._color != current_color and Chess_Board.Fig_Pos[find_helpers]._figure != 'King':
+		# 	for helpers_poss_move in Chess_Board.Fig_Pos[find_helpers].poss_moves:
+		# 		if helpers_poss_move in attackers_moves:
+		# 			print('poss_helper:', Chess_Board.Fig_Pos[find_helpers].position)
+		# 			old_position = Chess_Board.Fig_Pos[find_helpers].position
+		# 			new_position = helpers_poss_move
 
-					Chess_Board.Fig_Pos[old_position].position = new_position
-					Chess_Board.update_positions(old_position, new_position)
+		# 			Chess_Board.Fig_Pos[old_position].position = new_position
+		# 			Chess_Board.update_positions(old_position, new_position)
 
-					for to_update in Chess_Board.Fig_Pos:
-						Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
-					print(enemy_king_pos)
-					print(Chess_Board.Fig_Pos[end_position].poss_moves)
-					if enemy_king_pos not in Chess_Board.Fig_Pos[end_position].poss_moves:
-						print(f'helper is: {Chess_Board.Fig_Pos[new_position]._figure}')
-						print('check!')
-						Chess_Board.Fig_Pos[new_position].position = old_position
-						Chess_Board.update_positions(new_position, old_position)
+		# 			for to_update in Chess_Board.Fig_Pos:
+		# 				Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
+		# 			print(enemy_king_pos)
+		# 			print(Chess_Board.Fig_Pos[end_position].poss_moves)
+		# 			if enemy_king_pos not in Chess_Board.Fig_Pos[end_position].poss_moves:
+		# 				print(f'helper is: {Chess_Board.Fig_Pos[new_position]._figure}')
+		# 				print('check!')
+		# 				Chess_Board.Fig_Pos[new_position].position = old_position
+		# 				Chess_Board.update_positions(new_position, old_position)
 
-						for to_update in Chess_Board.Fig_Pos:
-							Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
-						return True
+		# 				for to_update in Chess_Board.Fig_Pos:
+		# 					Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)
+		# 				return True
 
-					Chess_Board.Fig_Pos[new_position].position = old_position
-					Chess_Board.update_positions(new_position, old_position)
+		# 			Chess_Board.Fig_Pos[new_position].position = old_position
+		# 			Chess_Board.update_positions(new_position, old_position)
 
-					for to_update in Chess_Board.Fig_Pos:
-						Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)						
+		# 			for to_update in Chess_Board.Fig_Pos:
+		# 				Chess_Board.Fig_Pos[to_update].update_poss_moves(Chess_Board)						
 
 
-
+	print("am",attackers_moves)
+	print("kms", Chess_Board.Fig_Pos[enemy_king_pos].poss_moves)
 	for king_move in Chess_Board.Fig_Pos[enemy_king_pos].poss_moves:
 		if king_move not in attackers_moves:
 			print('check!')
@@ -382,6 +384,7 @@ def check_rochade(current_color, start_position, end_position,Chess_Board):
 
 	cur_Board = Chess_Board.get_positions()
 	if start_position not in cur_Board or end_position not in cur_Board:
+		print("first here")
 		return False
 	p1 = cur_Board[start_position]
 	p2 = cur_Board[end_position]
@@ -389,6 +392,7 @@ def check_rochade(current_color, start_position, end_position,Chess_Board):
 	p2_position = p2.position
 
 	if p1._color != p2._color or p1._figure not in ('King', 'Rook') or p2._figure not in ('King', 'Rook'):
+		print("here test")
 		return False
 
 	if p1.already_moved or p2.already_moved:
@@ -440,65 +444,65 @@ def check_rochade(current_color, start_position, end_position,Chess_Board):
 	p2.already_moved = True
 	return True
 
-def process_input(current_color, start_position, end_position,Chess_Board):
-	print('process_input...', current_color, start_position, end_position)
-	cur_Board = Chess_Board.get_positions()
-	print(cur_Board)
-	if start_position not in cur_Board:
-		print('Empty field chosen.')
-		return False
+# def process_input(current_color, start_position, end_position,Chess_Board):
+# 	print('process_input...', current_color, start_position, end_position)
+# 	cur_Board = Chess_Board.get_positions()
+# 	print(cur_Board)
+# 	if start_position not in cur_Board:
+# 		print('Empty field chosen.')
+# 		return False
 
-	if current_color != Chess_Board.Fig_Pos[start_position]._color:
-		colors_turn = 'white' if current_color == 1 else 'black'
-		print(f'It´s {colors_turn} turn.')
-		return False
+# 	if current_color != Chess_Board.Fig_Pos[start_position]._color:
+# 		colors_turn = 'white' if current_color == 1 else 'black'
+# 		print(f'It´s {colors_turn} turn.')
+# 		return False
 
-	print('comes to check...')
+# 	print('comes to check...')
 
-	if check_rochade(current_color, start_position, end_position,Chess_Board):
-		return True
-	else:
-		pass
+# 	if check_rochade(current_color, start_position, end_position,Chess_Board):
+# 		return True
+# 	else:
+# 		pass
 
-	if check_if_move_is_possible(start_position, end_position,Chess_Board) and check_if_own_king_in_danger(start_position, end_position,Chess_Board) and check_if_checkmate(current_color, start_position, end_position,Chess_Board):
-		print('test12')
-		print(Chess_Board.Fig_Pos[(end_position)]._figure)
-		print(Chess_Board.Fig_Pos[(end_position)].position)
-		print(Chess_Board.Fig_Pos[(end_position)].poss_moves)
-		if Chess_Board.Fig_Pos[(end_position)]._figure in ('King', 'Rook'):
-			print('test13')
-			Chess_Board.Fig_Pos[(end_position)].already_moved = True
-		return True
-	else:
-		return False
+# 	if check_if_move_is_possible(start_position, end_position,Chess_Board) and check_if_own_king_in_danger(start_position, end_position,Chess_Board) and check_if_checkmate(current_color, start_position, end_position,Chess_Board):
+# 		print('test12')
+# 		print(Chess_Board.Fig_Pos[(end_position)]._figure)
+# 		print(Chess_Board.Fig_Pos[(end_position)].position)
+# 		print(Chess_Board.Fig_Pos[(end_position)].poss_moves)
+# 		if Chess_Board.Fig_Pos[(end_position)]._figure in ('King', 'Rook'):
+# 			print('test13')
+# 			Chess_Board.Fig_Pos[(end_position)].already_moved = True
+# 		return True
+# 	else:
+# 		return False
 
 
-def play_game(Chess_Board):
-	global playing 
-	playing = True
-	current_color = 1
-	while playing:
-		colors_turn = 'white' if current_color == 1 else 'black'
-		print(f'\nIts {colors_turn} turn. Your move: ')
-		try: 
-			a,b,c,d,e = input()
-			if a+b+c+d+e == 'exit!':
-				playing = False
-				return 
-			alphabet = ['a','b','c','d','e','f','g','h']
-			numbers = [1,2,3,4,5,6,7,8]
-			if str(a) in alphabet and int(b) in numbers and c == ' ' and str(d) in alphabet and int(e) in numbers:
-				translate_a = {'a' : 0, 'b' : 1, 'c' : 2, 'd' : 3, 'e' : 4, 'f' : 5, 'g' : 6, 'h' : 7}
-				translate_b = {'8' : 0, '7' : 1, '6' : 2, '5' : 3, '4' : 4, '3' : 5, '2' : 6, '1' : 7}
-				start_position = (translate_b[b], translate_a[a])
-				end_position = (translate_b[e], translate_a[d])	
+# def play_game(Chess_Board):
+# 	global playing 
+# 	playing = True
+# 	current_color = 1
+# 	while playing:
+# 		colors_turn = 'white' if current_color == 1 else 'black'
+# 		print(f'\nIts {colors_turn} turn. Your move: ')
+# 		try: 
+# 			a,b,c,d,e = input()
+# 			if a+b+c+d+e == 'exit!':
+# 				playing = False
+# 				return 
+# 			alphabet = ['a','b','c','d','e','f','g','h']
+# 			numbers = [1,2,3,4,5,6,7,8]
+# 			if str(a) in alphabet and int(b) in numbers and c == ' ' and str(d) in alphabet and int(e) in numbers:
+# 				translate_a = {'a' : 0, 'b' : 1, 'c' : 2, 'd' : 3, 'e' : 4, 'f' : 5, 'g' : 6, 'h' : 7}
+# 				translate_b = {'8' : 0, '7' : 1, '6' : 2, '5' : 3, '4' : 4, '3' : 5, '2' : 6, '1' : 7}
+# 				start_position = (translate_b[b], translate_a[a])
+# 				end_position = (translate_b[e], translate_a[d])	
 
-			if process_input(current_color, start_position, end_position,Chess_Board):
-				current_color = 0 if current_color == 1 else 1
-				Chess_Board.draw_Board()
+# 			if process_input(current_color, start_position, end_position,Chess_Board):
+# 				current_color = 0 if current_color == 1 else 1
+# 				Chess_Board.draw_Board()
 
-		except:
-			print('input not valid!')
+# 		except:
+# 			print('input not valid!')
 
 
 
