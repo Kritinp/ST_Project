@@ -14,4 +14,4 @@ Integration testing:
 $ mut.py --target chess --unit-test tests/test_* --operator IOD SCI CDI SVD
 
 Unit Testing:
-mut.py --target chess --unit-test tests/test_* --operator ASR COI SDI COD
+$ mut.py --target chess --unit-test tests/test_* --operator ASR COI SDI COD
